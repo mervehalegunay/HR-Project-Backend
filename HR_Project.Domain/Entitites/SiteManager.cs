@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Domain.Entitites
 {
-    public class SiteManager : Person, IBaseEntity
+    public class SiteManager : Person , IBaseEntity
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
