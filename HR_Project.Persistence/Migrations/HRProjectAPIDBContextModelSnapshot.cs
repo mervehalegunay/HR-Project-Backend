@@ -184,26 +184,6 @@ namespace HR_Project.Persistence.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("SiteManagers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            AddressDetail = "yakını",
-                            AppUserId = "b92f3517-ccea-46bd-ba7a-ba6b18e020a5",
-                            BirthDate = new DateTime(2024, 3, 8, 17, 16, 15, 455, DateTimeKind.Local).AddTicks(463),
-                            BirthPlace = "Beykoz",
-                            City = "İst",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            District = "Marmara",
-                            FirstName = "hale",
-                            HireDate = new DateTime(2024, 3, 8, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "gny",
-                            PhoneNumber = "5553332211",
-                            Salary = 100000m,
-                            Status = 0,
-                            TCNO = "11111111111111"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

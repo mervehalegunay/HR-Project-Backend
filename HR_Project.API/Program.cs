@@ -20,7 +20,7 @@ namespace HR_Project.API
 
             // Add services to the container.
 
-            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Hale")));
+            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Burak")));
 
             builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<HRProjectAPIDBContext>();
 

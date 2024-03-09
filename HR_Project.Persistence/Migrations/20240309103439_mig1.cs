@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HR_Project.Persistence.Migrations
 {
-    public partial class hale : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -196,11 +196,6 @@ namespace HR_Project.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "SiteManagers",
-                columns: new[] { "Id", "AddressDetail", "AppUserId", "BirthDate", "BirthPlace", "City", "CreatedDate", "DeletedDate", "District", "FirstName", "HireDate", "ImagePath", "LastName", "LeavingDate", "PhoneNumber", "Salary", "SecondLastName", "SecondName", "Status", "TCNO", "UpdatedDate" },
-                values: new object[] { -1, "yakını", "b92f3517-ccea-46bd-ba7a-ba6b18e020a5", new DateTime(2024, 3, 8, 17, 16, 15, 455, DateTimeKind.Local).AddTicks(463), "Beykoz", "İst", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Marmara", "hale", new DateTime(2024, 3, 8, 0, 0, 0, 0, DateTimeKind.Local), null, "gny", null, "5553332211", 100000m, null, null, 0, "11111111111111", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
