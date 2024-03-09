@@ -10,43 +10,58 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HR_Project.Persistence.Repositories
 {
-    public class WriteRepository<T> : IWriteRepository<T> where T : IBaseEntity
+    public class WriteRepository<T> : IWriteRepository<T> where T : class, IBaseEntity
     {
         private readonly HRProjectAPIDBContext db;
-        
+
         public WriteRepository(HRProjectAPIDBContext db)
         {
             this.db = db;
         }
-        public bool Add(T model)
+        DbSet<T> table => db.Set<T>();
+        public async Task<bool> Add(T model)
         {
-            db.Add(model);
-            return db.SaveChanges() > 0;
-            
+            model.CreatedDate = DateTime.Now;
+            EntityEntry<T> entityEntry = await table.AddAsync(model);
+            return entityEntry.State == EntityState.Added;
+
         }
 
-        public bool AddRange(List<T> values)
+        public async Task<bool> AddRange(List<T> values)
         {
-           db.AddRange(values);
-            return db.SaveChanges() > 0;
+            foreach (var item in values)
+            {
+                item.CreatedDate = DateTime.Now;
+            }
+            await table.AddRangeAsync(values);
+            return true;
         }
 
-        public bool Delete(T model)
+        public async Task<bool> Delete(T model)
         {
-             db.Remove(model);
-            return db.SaveChanges() > 0;
+            model.DeletedDate = DateTime.Now;
+            EntityEntry<T> entityEntry = table.Remove(model);
+            return entityEntry.State == EntityState.Deleted;
         }
 
-        public bool DeleteRange(List<T> values)
+        public async Task<bool> DeleteRange(List<T> values)
         {
-              db.RemoveRange(values);
-             return db.SaveChanges() > 0;
+            foreach (var item in values)
+            {
+                item.DeletedDate = DateTime.Now;
+            }
+            table.RemoveRange(values);
+            return true;
         }
 
-        public bool Update(T model)
+        public async Task<bool> Update(T model)
         {
-             db.Update(model);
-            return db.SaveChanges() > 0;
+            model.UpdatedDate = DateTime.Now;
+            EntityEntry entityEntry = table.Update(model);
+            return entityEntry.State == EntityState.Modified;
         }
-   }
+
+        public async Task<int> SaveAsync()
+            => await db.SaveChangesAsync();
+    }
 }
