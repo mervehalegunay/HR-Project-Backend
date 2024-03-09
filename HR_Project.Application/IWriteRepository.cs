@@ -8,14 +8,14 @@ namespace HR_Project.Application
 {
     public interface IWriteRepository<T> where T : IBaseEntity
     {
-        bool Delete(T model);
-        bool Add(T model);
-        bool Update(T model);
+        Task<bool> Delete(T model);
+        Task<bool> Add(T model);
+        Task<bool> Update(T model);
 
         
-        bool DeleteRange(List<T> values);
-        bool AddRange(List<T> values);
-
+        Task<bool> DeleteRange(List<T> values);
+        Task<bool> AddRange(List<T> values);
+        Task<int> SaveAsync();
 
 
     }
