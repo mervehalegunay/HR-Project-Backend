@@ -34,7 +34,7 @@ namespace HR_Project.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<SiteManager>().HasData(new SiteManager {Id=-1, AppUserId= Guid.NewGuid().ToString(), FirstName="hale", LastName="gny", BirthDate=DateTime.Now, HireDate=DateTime.Today, TCNO="11111111111111", BirthPlace="Beykoz",PhoneNumber="5553332211", City="İst", District="Marmara", AddressDetail="yakını", Salary=100000});
+            //builder.Entity<SiteManager>().HasData(new SiteManager {Id=-1, AppUserId= Guid.NewGuid().ToString(), FirstName="hale", LastName="gny", BirthDate=DateTime.Now, HireDate=DateTime.Today, TCNO="11111111111111", BirthPlace="Beykoz",PhoneNumber="5553332211", City="İst", District="Marmara", AddressDetail="yakını", Salary=100000});
             base.OnModelCreating(builder);
         }
 
