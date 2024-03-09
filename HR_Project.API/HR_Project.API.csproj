@@ -9,10 +9,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HR_Project.Persistence\HR_Project.Persistence.csproj"/>
+    <ProjectReference Include="..\HR_Project.Application\HR_Project.Application.csproj" />
+    <ProjectReference Include="..\HR_Project.Infrastructure\HR_Project.Infrastructure.csproj" />
+    <ProjectReference Include="..\HR_Project.Persistence\HR_Project.Persistence.csproj" />
   </ItemGroup>
 </Project>
