@@ -10,7 +10,6 @@ namespace HR_Project.Application
 {
     public interface ISiteManagerRepository : IBaseRepository<SiteManager>
     {
-
-
+        
     }
 }

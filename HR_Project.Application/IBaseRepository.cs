@@ -1,4 +1,5 @@
-﻿using HR_Project.Domain.Entitites.Common;
+﻿using HR_Project.Domain.Entitites;
+using HR_Project.Domain.Entitites.Common;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application
 {
-    public interface IBaseRepository <T> where T : class, IBaseEntity
+    public interface IBaseRepository <T> where T :  IBaseEntity
     {
         Task<T> GetById(int id);
         Task<T> GetByExpression(Expression<Func<T, bool>> expression);
