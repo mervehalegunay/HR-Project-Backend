@@ -22,7 +22,7 @@ namespace HR_Project.Domain.Entitites.Common
         public DateTime HireDate { get; set; }
         public DateTime? LeavingDate { get; set; }
         public string PhoneNumber { get; set; }
-        public string Address { get { return AddressDetail + " " + District.ToUpper() + "/" + City.ToUpper(); } }
+        public string? Address { get { return AddressDetail + " " + District.ToUpper() + "/" + City.ToUpper(); } }
         public string City { get; set; }
         public string District { get; set; }
         public string AddressDetail { get; set; }
