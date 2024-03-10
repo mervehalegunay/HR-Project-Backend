@@ -16,6 +16,7 @@ namespace HR_Project.Domain.Entitites.Common
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Status Status { get; set; }
+        int IBaseEntity.Id { get ; set ; }
         //public Employee? Employee { get; set; }
         //public Director? Director { get; set; }
         //public SiteOwner? SiteOwner { get; set; }

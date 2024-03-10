@@ -19,10 +19,10 @@ namespace HR_Project.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddPersistenceServices(); // bu kod repolarý servisleri falan tek yerden ioc olarak kullanmamýzý saglýyo bunun içini de persistence katmanýndaki serviceregistration da dolduruyoruz
+            builder.Services.AddPersistenceServices(); // bu kod repolarï¿½ servisleri falan tek yerden ioc olarak kullanmamï¿½zï¿½ saglï¿½yo bunun iï¿½ini de persistence katmanï¿½ndaki serviceregistration da dolduruyoruz
 
 
-            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Burak")));
+            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
@@ -63,7 +63,7 @@ namespace HR_Project.API
 
             });
 
-            //REPOSÝTORÝES
+            //REPOSï¿½TORï¿½ES
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
             builder.Services.AddTransient<ISiteManagerRepository, SiteManagerRepository>();
@@ -88,7 +88,7 @@ namespace HR_Project.API
                 options.AddPolicy("AllowSpecificOrigin",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:5173") // Ýzin vermek istediðiniz kaynak
+                        builder.WithOrigins("https://localhost:5173") // ï¿½zin vermek istediï¿½iniz kaynak
                                .AllowAnyMethod()
                                .AllowAnyHeader();
                     });
