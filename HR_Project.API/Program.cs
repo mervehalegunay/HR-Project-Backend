@@ -1,6 +1,7 @@
 using HR_Project.Application;
 using HR_Project.Application.Services;
 using HR_Project.Domain.Entitites.Common;
+using HR_Project.Persistence;
 using HR_Project.Persistence.Context;
 using HR_Project.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,8 +19,10 @@ namespace HR_Project.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddPersistenceServices(); // bu kod repolarý servisleri falan tek yerden ioc olarak kullanmamýzý saglýyo bunun içini de persistence katmanýndaki serviceregistration da dolduruyoruz
 
-            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("conStr")));
+
+            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Burak")));
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
