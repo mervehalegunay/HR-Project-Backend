@@ -6,67 +6,96 @@ using System.Threading.Tasks;
 using HR_Project.Application;
 using HR_Project.Domain.Entitites;
 using HR_Project.Persistence.Context;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using HR_Project.Domain.Entitites.Common;
 
 namespace HR_Project.Persistence.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class , IBaseEntity
     {
-        private readonly HRProjectAPIDBContext db;
+        private readonly HRProjectAPIDBContext _context;
 
-        public BaseRepository(HRProjectAPIDBContext db)
+        public BaseRepository(HRProjectAPIDBContext context)
         {
-            this.db = db;
+            _context = context;
         }
 
-        public Task<bool> Create(T entity)
+        public DbSet<T> Table => _context.Set<T>();
+
+        public async Task<bool> AddAsync(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry<T> entityEntry = await Table.AddAsync(model);
+            return entityEntry.State == EntityState.Added;
         }
 
-        public Task<bool> Delete(T entity)
+        public async Task<bool> AddRangeAsync(List<T> datas)
         {
-            throw new NotImplementedException();
+            await Table.AddRangeAsync(datas);
+            return true;
         }
 
-        public Task<List<T>> GetAll(Expression<Func<T, bool>> expression = null)
+        public bool Remove(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry<T> entityEntry = Table.Remove(model);
+            return entityEntry.State == EntityState.Deleted;
         }
 
-        public Task<T> GetByExpression(Expression<Func<T, bool>> expression)
+        public async Task<bool> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            T model = await Table.FirstOrDefaultAsync(data => data.Id == id);
+            return Remove(model);
         }
 
-        public Task<T> GetById(int id)
+        public bool RemoveRange(List<T> datas)
         {
-            throw new NotImplementedException();
+            Table.RemoveRange(datas);
+            return true;
         }
 
-        public Task<TResult> GetFilteredFirstOrDefault<TResult>(Expression<Func<T, TResult>> select = null, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        public bool Update(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry entityEntry = Table.Update(model);
+            return entityEntry.State == EntityState.Modified;
         }
 
-        public Task<T> GetFilteredInclude(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        public async Task<int> SaveAsync()
+            => await _context.SaveChangesAsync();
+
+
+        public IQueryable<T> GetAll(bool tracking = true)
         {
-            throw new NotImplementedException();
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+            return query;
         }
 
-        public Task<List<TResult>> GetFilteredList<TResult>(Expression<Func<T, TResult>> select = null, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            throw new NotImplementedException();
+            var query = Table.Where(method);
+            if (!tracking)
+                query = query.AsNoTracking();
+            return query;
         }
 
-        public Task<int> SaveChange()
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            throw new NotImplementedException();
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(method);
         }
 
-        public Task<bool> Update(T entity)
+        public async Task<T> GetByIdAsync(int id, bool tracking = true)
+        //=> await Table.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+        //=> await Table.FindAsync(Guid.Parse(id));
         {
-            throw new NotImplementedException();
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = Table.AsNoTracking();
+            return await query.FirstOrDefaultAsync(data => data.Id == id);
         }
     }
 }

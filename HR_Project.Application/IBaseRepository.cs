@@ -1,5 +1,6 @@
 ﻿using HR_Project.Domain.Entitites;
 using HR_Project.Domain.Entitites.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -10,31 +11,21 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Application
 {
-    public interface IBaseRepository <T> where T :  IBaseEntity
+    public interface IBaseRepository <T> where T :  class, IBaseEntity
     {
-        Task<T> GetById(int id);
-        Task<T> GetByExpression(Expression<Func<T, bool>> expression);
+        DbSet<T> Table { get; }
+        Task<bool> AddAsync(T model);
+        Task<bool> AddRangeAsync(List<T> datas);
+        bool Remove(T model);
+        Task<bool> RemoveAsync(int id);
+        bool RemoveRange(List<T> datas);
+        bool Update(T model);
+        Task<int> SaveAsync();
 
-        Task<bool> Create(T entity);
-        Task<bool> Update(T entity);
-        Task<bool> Delete(T entity);
-        Task<int> SaveChange();
-        Task<List<T>> GetAll(Expression<Func<T, bool>> expression = null);
-        Task<TResult> GetFilteredFirstOrDefault<TResult>(
-            Expression<Func<T, TResult>> select = null,
-            Expression<Func<T, bool>> where = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
-            );
-
-        Task<List<TResult>> GetFilteredList<TResult>(
-       Expression<Func<T, TResult>> select = null,
-       Expression<Func<T, bool>> where = null,
-       Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-       Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
-       );
-
-        Task<T> GetFilteredInclude(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
+        IQueryable<T> GetAll(bool tracking = true);
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
+        Task<T> GetByIdAsync(int id, bool tracking = true);
 
 
     }
