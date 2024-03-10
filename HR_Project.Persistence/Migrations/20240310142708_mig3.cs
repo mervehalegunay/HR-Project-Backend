@@ -4,7 +4,7 @@
 
 namespace HR_Project.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class mig3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

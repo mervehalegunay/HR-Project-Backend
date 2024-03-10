@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using HR_Project.Application.Services;
@@ -19,23 +20,7 @@ namespace HR_Project.API.Controllers
             _siteManagerService = siteManager;
         }
 
-        [HttpGet("[action]")]
-        // [Authorize(Roles = "SiteOwner")]
-        public async Task<IActionResult> GetDetailSiteOwner(int id)
-        {
-            var resultSum = await _siteManagerService.GetDetailSiteOwner(id);
-
-            if (id > 0)
-            {
-                return Ok(resultSum);
-            }
-            else
-            {
-                return NotFound("Kişi bulunamadı");
-            }
-        }
-
-
+      
         /////////////////////////////////////////////////////////
         /// ORNEK OLSUN DIYE ASAGI BIRAKIYORUM HATALAR CIKABILIR DUZELTIRIZ
         /// /////////////////////////////////////////////////////////////
@@ -48,6 +33,8 @@ namespace HR_Project.API.Controllers
             if (result)
                 return Ok("Site Manager added successfully");
             return BadRequest("Failed to add Site Manager");
+
+            
         }
 
         [HttpPut("{id}")]

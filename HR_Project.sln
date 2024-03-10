@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Project.Infrastructure", "HR_Project.Infrastructure\HR_Project.Infrastructure.csproj", "{3C5F77D4-5D37-4E2D-AB70-7C388899D75B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR_Project.API", "HR_Project.API\HR_Project.API.csproj", "{4D4B1C14-FD4F-4781-9181-C4780D50C434}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HR.Project.Client", "HR.Project.Client", "{870B0F5B-AE34-4ADF-BF5F-57A9E0BC53B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{870B0F5B-AE34-4ADF-BF5F-57A9E0BC53B7} = {BFA0995B-757F-4DD2-B9FA-CEC9A02BA253}
 		{23D8FC86-9B2A-41F8-BF85-CEDCDDE606B1} = {744352E8-508C-4921-BBD1-82226CEB3F87}
 		{5C60C186-924F-4E81-8240-E8B3EF128D13} = {744352E8-508C-4921-BBD1-82226CEB3F87}
 		{A966C525-5DAC-4F84-8E51-C472AA0E9B6A} = {13277FF2-1E9E-4CB8-858A-6C7D749E3BA4}

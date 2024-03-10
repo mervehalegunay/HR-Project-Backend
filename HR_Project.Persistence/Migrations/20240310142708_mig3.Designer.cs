@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Persistence.Migrations
 {
     [DbContext(typeof(HRProjectAPIDBContext))]
-    [Migration("20240309104226_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240310142708_mig3")]
+    partial class mig3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,23 +112,23 @@ namespace HR_Project.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AddressDetail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BirthPlace")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -138,14 +138,16 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("HireDate")
+                    b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
@@ -159,10 +161,9 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Salary")
+                    b.Property<decimal?>("Salary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SecondLastName")
@@ -175,7 +176,6 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TCNO")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
