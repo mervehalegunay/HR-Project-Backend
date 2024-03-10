@@ -16,24 +16,19 @@ namespace HR_Project.Domain.Entitites.Common
 
         public string? SecondName { get; set; }
         public string? SecondLastName { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string TCNO { get; set; }
-        public string BirthPlace { get; set; }
-        public DateTime HireDate { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string? TCNO { get; set; }
+        public string? BirthPlace { get; set; }
+        public DateTime? HireDate { get; set; }
         public DateTime? LeavingDate { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
-        public string City { get; set; }
-        public string District { get; set; }
-        public string AddressDetail { get; set; }
-        public decimal Salary { get; set; }
+        public string? City { get; set; }
+        public string? District { get; set; }
+        public string? AddressDetail { get; set; }
+        public decimal? Salary { get; set; }
         public string? ImagePath { get; set; }
-
-
-
-        public string Job { get; set; }
-
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
     }
 }

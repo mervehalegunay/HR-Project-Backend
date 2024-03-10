@@ -11,6 +11,10 @@ namespace HR_Project.Domain.Entitites.Common
 {
     public class AppUser : IdentityUser, IBaseEntity
     {
+        public AppUser()
+        {
+            CreatedDate = DateTime.Now;
+        }
         public int? RenewPasswordCode { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

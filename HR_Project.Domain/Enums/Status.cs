@@ -10,10 +10,13 @@ namespace HR_Project.Domain.Enums
     public enum Status
     {
         [Display(Name = "Aktif")]
-
         Active = 1,
+
+
         [Display(Name = "Güncellendi")]
         Modified,
+
+
         [Display(Name = "Pasif")]
         Passive
     }

@@ -12,6 +12,10 @@ namespace HR_Project.Domain.Entitites
 {
     public class SiteManager : Person , IBaseEntity
     {
+        public SiteManager()
+        {
+            CreatedDate= DateTime.Now;
+        }
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
@@ -19,9 +23,9 @@ namespace HR_Project.Domain.Entitites
         public Status Status { get; set; }
 
         [NotMapped]
-        public IFormFile UploadPath { get; set; }
-        //public int JobId { get; set; }
-        //public Job Job { get; set; }
+        public IFormFile? UploadPath { get; set; }
+       
+
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
