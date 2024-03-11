@@ -15,36 +15,20 @@ namespace HR_Project.API.Controllers
     [Authorize]
     public class AccountController : ControllerBase
     {
-        
-	
-	
-	
-		private readonly UserManager<AppUser> userManager;
-		private readonly SignInManager<AppUser> signInManager;
-		private readonly RoleManager<IdentityRole> roleManager;
-        private readonly PasswordHasher<AppUser> passwordHasher;
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, PasswordHasher<AppUser> passwordHasher)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
-			this.userManager = userManager;
-			this.signInManager = signInManager;
-			this.roleManager = roleManager;
-            this.passwordHasher = passwordHasher;
+            userManager = userManager;
+            signInManager = signInManager;
         }
 
-		[AllowAnonymous]
-		public IActionResult Login(string returnUrl)
-		{
-			LoginVM loginVM = new LoginVM();
-			loginVM.ReturnUrl = returnUrl;
-			return Ok(loginVM);
-		}
-
-		[AllowAnonymous]
-		[HttpPost]
-		public async Task<IActionResult> Login(LoginVM login)
-		{
-            if (ModelState.IsValid)
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginVM login)
+        {
+             if (ModelState.IsValid)
             {
 				AppUser appuser = await userManager.FindByNameAsync(login.UserName);
 				if (appuser != null)
@@ -103,35 +87,14 @@ namespace HR_Project.API.Controllers
                 }
 				
             }
-
-			return Ok(login);
+            return Ok("Login successful");
         }
 
-		public async Task<IActionResult> Logout()
-		{
-			await signInManager.SignOutAsync();
-			return RedirectToAction("Index", "Home");
-		}
-
-		public IActionResult AccessDenied()
-		{
-			return Ok();
-		}
-
-		[AllowAnonymous]
-		public IActionResult Create()
-		{
-			
-			
-			
-
-			return Ok();
-		}
-
-		[AllowAnonymous]
-		[HttpPost]
-		public async Task<IActionResult> Create(UserSignUpVM user)
-		{
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterVM user)
+        {
+           
 			if (user.Password != user.RepeatPassword)
 			{
 				ModelState.AddModelError(nameof(user.Password), "Sign Up Failed : Paswords does not match.");
@@ -175,88 +138,16 @@ namespace HR_Project.API.Controllers
 				}
 			}
 
-			
-			return Ok(user);
-		}
 
-		public async Task<IActionResult> Update(string id)
-		{
-			AppUser user = await userManager.FindByIdAsync(id);
-
-            if (user != null)
-            {
-                return Ok(user);
-            }
-			else
-			{
-				return RedirectToAction("Index");
-			}
+            return Ok("Registration successful");
         }
 
-		[HttpPost]
-		public async Task<IActionResult> Update(string id, string userName, string email, string password)
-		{
-			AppUser user = await userManager.FindByIdAsync(id);
-			if (user != null)
-			{
-				if (!string.IsNullOrEmpty(userName))
-				{
-					user.UserName = userName;
-				}
-				else
-				{
-					ModelState.AddModelError("UpdateUser", "Username cannot be empty.");
-				}
+     
 
-				if (!string.IsNullOrEmpty(email)) 
-				{
-					user.Email = email;
-				}
-				else
-				{
-                    ModelState.AddModelError("UpdateUser", "Email cannot be empty");
-                }
-
-				if (!string.IsNullOrEmpty (password))
-				{
-					user.PasswordHash = passwordHasher.HashPassword(user, password);
-				}
-				else
-				{
-					ModelState.AddModelError("UpdateUser", "Password cannot be empty");
-				}
-
-				if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password)) 
-				{
-					IdentityResult result = await userManager.UpdateAsync(user);
-					if (result.Succeeded)
-					{
-						return RedirectToAction("Bilgiler", "Home");
-					}
-					else
-					{
-						Errors(result);
-
-					}
-				}
-			}
-			else
-			{
-				ModelState.AddModelError("UpdateUser", "User Not Found");
-			}
-
-			return Ok(user);
-		}
-		
-		public async Task<IActionResult> Index()
-		{
-			AppUser user = await userManager.GetUserAsync(HttpContext.User);
-			
-			return Ok(user);
-		}
-
-		public async Task<IActionResult> Delete(string id)
-		{
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+           
 			AppUser user = await userManager.FindByIdAsync(id);
 
 			if (user != null)
@@ -279,16 +170,32 @@ namespace HR_Project.API.Controllers
                 ModelState.AddModelError("User", "User Not Found");
             }
 
-			return Ok(user);
-		}
 
-		private void Errors(IdentityResult result)
+            return Ok("User deleted successfully");
+        }
+
+        // [HttpGet("profile/{id}")]
+        // public async Task<IActionResult> UserProfile(string id)
+        // {
+        //     // Kullanıcı profil bilgilerini getirme işlemleri
+        //     // ...
+
+        //     return Ok("User profile information");
+        // }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            
+			await signInManager.SignOutAsync();
+            return Ok("Logout successful");
+        }
+        private void Errors(IdentityResult result)
 		{
 			foreach (IdentityError item in result.Errors)
 			{
 				ModelState.AddModelError("UpdateUser", $"{item.Code} - {item.Description}");
 			}
 		}
-	
     }
 }

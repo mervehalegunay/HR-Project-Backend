@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HR_Project.API.Models
 {
-    public class UserSignUpVM
+    public class RegisterVM
     {
-        [Required]
+       [Required]
 		public string UserName { get; set; }
 		[Required]
 		public string FirstName { get; set; }
