@@ -22,8 +22,8 @@ namespace HR_Project.Application
         bool Update(T model);
         Task<int> SaveAsync();
 
-        IQueryable<T> GetAll(bool tracking = true);
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
+        Task<IEnumerable<T>> GetAll(bool tracking = true);
+        IEnumerable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetByIdAsync(int id, bool tracking = true);
 

@@ -11,8 +11,8 @@ namespace HR_Project.Domain.Entitites.Common
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [NotMapped]
-        public string? FullName { get { return FirstName + " " + LastName; } }
+        // [NotMapped]
+        // public string? FullName { get { return FirstName + " " + LastName; } }
 
         public string? SecondName { get; set; }
         public string? SecondLastName { get; set; }
@@ -26,7 +26,7 @@ namespace HR_Project.Domain.Entitites.Common
         public string? City { get; set; }
         public string? District { get; set; }
         public string? AddressDetail { get; set; }
-        public decimal? Salary { get; set; }
+        public int? Salary { get; set; }
         public string? ImagePath { get; set; }
         public string? Email { get; set; }
 

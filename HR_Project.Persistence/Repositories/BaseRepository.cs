@@ -10,49 +10,115 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using HR_Project.Domain.Entitites.Common;
+using System.Collections;
 
 namespace HR_Project.Persistence.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class , IBaseEntity
     {
-        private readonly HRProjectAPIDBContext _context;
+        private readonly HRProjectAPIDBContext db;
 
         public BaseRepository(HRProjectAPIDBContext context)
         {
-            _context = context;
+            db = context;
         }
 
-        public DbSet<T> Table => _context.Set<T>();
+        public DbSet<T> Table => db.Set<T>();
 
         public async Task<bool> AddAsync(T model)
         {
-            EntityEntry<T> entityEntry = await Table.AddAsync(model);
-            return entityEntry.State == EntityState.Added;
+            using (var transaction = await db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    await Table.AddAsync(model);
+                    await db.SaveChangesAsync();
+
+                    // Eğer her şey başarılı ise, commit
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch (System.Exception ex)
+                {
+                    // Hata loglama
+                    Console.WriteLine($"Hata oluştu: {ex.Message}");
+                    // Eğer bir hata olursa, değişiklikleri geri al
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+            }
         }
+
 
         public async Task<bool> AddRangeAsync(List<T> datas)
         {
-            await Table.AddRangeAsync(datas);
-            return true;
+           using (var transaction = await db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    await Table.AddRangeAsync(datas);
+                    await db.SaveChangesAsync();
+
+                    // Eğer her şey başarılı ise, commit
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch (System.Exception ex)
+                {
+                    // Hata loglama
+                    Console.WriteLine($"Hata oluştu: {ex.Message}");
+                    // Eğer bir hata olursa, değişiklikleri geri al
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+            }
         }
 
-        public bool Remove(T model)
-        {
-            EntityEntry<T> entityEntry = Table.Remove(model);
-            return entityEntry.State == EntityState.Deleted;
-        }
+        // public bool Remove(T model)
+        // {
+        //     EntityEntry<T> entityEntry = Table.Remove(model);
+        //     return entityEntry.State == EntityState.Deleted;
+        // }
 
-        public async Task<bool> RemoveAsync(int id)
-        {
-            T model = await Table.FirstOrDefaultAsync(data => data.Id == id);
-            return Remove(model);
-        }
+        // public async Task<bool> RemoveAsync(int id)
+        // {
+        //     using (var transaction = await db.Database.BeginTransactionAsync())
+        //     {
+        //         try
+        //         {
+        //             T model = await Table.FirstOrDefaultAsync(a=>a.Id == id);
+        //             bool removeResult = await RemoveAsync(model);
 
-        public bool RemoveRange(List<T> datas)
-        {
-            Table.RemoveRange(datas);
-            return true;
-        }
+        //             if (removeResult)
+        //             {
+        //                 // Eğer her şey başarılı ise, commit
+        //                 await transaction.CommitAsync();
+        //             }
+        //             else
+        //             {
+        //                 // Eğer bir hata olursa, değişiklikleri geri al
+        //                 await transaction.RollbackAsync();
+        //             }
+
+        //             return removeResult;  // Bu satır çalışacak
+        //         }
+        //         catch (System.Exception ex)
+        //         {
+        //             // Hata loglama
+        //             Console.WriteLine($"Hata oluştu: {ex.Message}");
+        //             // Eğer bir hata olursa, değişiklikleri geri al
+        //             await transaction.RollbackAsync();
+        //             return false;
+        //         }
+        //     }
+        // }
+
+
+        // public bool RemoveRange(List<T> datas)
+        // {
+        //     Table.RemoveRange(datas);
+        //     return true;
+        // }
 
         public bool Update(T model)
         {
@@ -61,18 +127,19 @@ namespace HR_Project.Persistence.Repositories
         }
 
         public async Task<int> SaveAsync()
-            => await _context.SaveChangesAsync();
+            => await db.SaveChangesAsync();
 
 
-        public IQueryable<T> GetAll(bool tracking = true)
+        public async Task<IEnumerable<T>> GetAll(bool tracking = true)
         {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
-            return query;
+            // var query = Table.AsQueryable();
+            // if (!tracking)
+            //     query = query.AsNoTracking();
+            // return query;
+            return await Table.ToListAsync();
         }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
+        public IEnumerable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
         {
             var query = Table.Where(method);
             if (!tracking)
@@ -96,6 +163,21 @@ namespace HR_Project.Persistence.Repositories
             if (!tracking)
                 query = Table.AsNoTracking();
             return await query.FirstOrDefaultAsync(data => data.Id == id);
+        }
+
+        public bool Remove(T model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RemoveAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveRange(List<T> datas)
+        {
+            throw new NotImplementedException();
         }
     }
 }

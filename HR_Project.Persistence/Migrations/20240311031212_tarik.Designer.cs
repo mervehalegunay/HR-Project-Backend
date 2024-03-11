@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Persistence.Migrations
 {
     [DbContext(typeof(HRProjectAPIDBContext))]
-    [Migration("20240309103439_mig1")]
-    partial class mig1
+    [Migration("20240311031212_tarik")]
+    partial class tarik
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,18 +36,20 @@ namespace HR_Project.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -72,9 +74,6 @@ namespace HR_Project.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("RenewPasswordCode")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -84,12 +83,12 @@ namespace HR_Project.Persistence.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -102,6 +101,28 @@ namespace HR_Project.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "df5a9b38-18e8-48b7-97bf-ad4a9b4afe0e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a688828d-f205-4812-8c20-573f2dafb85e",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHLjeW1O1y4D+cSn3LoTdpCwfFw2ipovfxA4jXL8dhX3nixNeD0qWRT7hzctJSNoUQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Status = 1,
+                            TwoFactorEnabled = false,
+                            UserName = "admin",
+                            isDeleted = false
+                        });
                 });
 
             modelBuilder.Entity("HR_Project.Domain.Entitites.SiteManager", b =>
@@ -112,23 +133,23 @@ namespace HR_Project.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AddressDetail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BirthPlace")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -138,14 +159,16 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("HireDate")
+                    b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
@@ -159,11 +182,10 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("Salary")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecondLastName")
                         .HasColumnType("nvarchar(max)");
@@ -175,7 +197,6 @@ namespace HR_Project.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TCNO")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -213,6 +234,22 @@ namespace HR_Project.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f6040633-db1b-4a48-be54-9f214e77ac9d",
+                            ConcurrencyStamp = "0c62afbd-a6f7-48e7-a34e-fad272b3a3d5",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ef21406f-d985-4171-876b-60e988e25f18",
+                            ConcurrencyStamp = "476cb8d2-688d-4164-8338-8abdea9e5c56",
+                            Name = "Standard User",
+                            NormalizedName = "STANDARD USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -300,6 +337,13 @@ namespace HR_Project.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "df5a9b38-18e8-48b7-97bf-ad4a9b4afe0e",
+                            RoleId = "f6040633-db1b-4a48-be54-9f214e77ac9d"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

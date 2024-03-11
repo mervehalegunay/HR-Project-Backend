@@ -42,9 +42,9 @@ namespace HR_Project.Persistence.Managers
             return await _siteManagerRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<SiteManager> GetAllSiteManagers()
+        public async Task<IEnumerable<SiteManager>> GetAllSiteManagersAsync()
         {
-            return _siteManagerRepository.GetAll().ToList();
+            return await _siteManagerRepository.GetAll();
         }
     }
 }
