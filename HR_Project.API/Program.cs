@@ -1,15 +1,11 @@
 using HR_Project.Application;
-using HR_Project.Application.Services;
 using HR_Project.Domain.Entitites.Common;
 using HR_Project.Persistence;
 using HR_Project.Persistence.Context;
 using HR_Project.Persistence.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
+using System.Reflection;
 
 namespace HR_Project.API
 {
@@ -18,50 +14,29 @@ namespace HR_Project.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<HRProjectAPIDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
 
             builder.Services.AddPersistenceServices(); // bu kod repolar� servisleri falan tek yerden ioc olarak kullanmam�z� sagl�yo bunun i�ini de persistence katman�ndaki serviceregistration da dolduruyoruz
 
 
-            builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>(opts =>
+
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<HRProjectAPIDBContext>();
+
+            builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Account/Login");
+
+            builder.Services.Configure<IdentityOptions>(opt =>
             {
-                opts.User.RequireUniqueEmail = true;
-                opts.Password.RequiredLength = 8;
-                opts.Password.RequireUppercase = true;
-                opts.Password.RequireDigit = true;
-                opts.Password.RequireLowercase = true;
-                opts.Password.RequireNonAlphanumeric = true;
-
-            }).AddEntityFrameworkStores<HRProjectAPIDBContext>().AddDefaultTokenProviders();
-
-
-            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
-            var secretKey = jwtSettings["secretKey"];
-
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = jwtSettings["validIssuer"],
-                    ValidAudience = jwtSettings["validAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-
+                opt.User.RequireUniqueEmail = true;
             });
+
+
+
+
+
 
             //REPOS�TOR�ES
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -69,7 +44,7 @@ namespace HR_Project.API
             builder.Services.AddTransient<ISiteManagerRepository, SiteManagerRepository>();
 
 
- 
+
             //builder.Services.AddTransient<ISiteManagerService, SiteManagerService>();
 
 
@@ -78,20 +53,19 @@ namespace HR_Project.API
 
 
 
-            builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder =>
-                    {
-                        builder.WithOrigins("https://localhost:5173") // �zin vermek istedi�iniz kaynak
-                               .AllowAnyMethod()
-                               .AllowAnyHeader();
-                    });
+               options.AddPolicy("AllowSpecificOrigin",
+                   builder =>
+                   {
+                       builder.WithOrigins("https://localhost:5173") // �zin vermek istedi�iniz kaynak
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                   });
             });
 
             var app = builder.Build();
