@@ -9,21 +9,14 @@ using System.Threading.Tasks;
 
 namespace HR_Project.Domain.Entitites.Common
 {
-    public class AppUser : IdentityUser, IBaseEntity
+    public class AppUser : IdentityUser
     {
-        public AppUser()
-        {
-            CreatedDate = DateTime.Now;
-        }
-        public int? RenewPasswordCode { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public Status Status { get; set; }
-        int IBaseEntity.Id { get ; set ; }
-        //public Employee? Employee { get; set; }
-        //public Director? Director { get; set; }
-        //public SiteOwner? SiteOwner { get; set; }
+       
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public bool isDeleted { get; set; }
+        public Status Status { get; set; } = Status.Active;
+       
 
     }
 }

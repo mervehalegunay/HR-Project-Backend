@@ -13,6 +13,6 @@ namespace HR_Project.Application.Services
         bool UpdateSiteManager(SiteManager siteManager);
         Task<bool> DeleteSiteManagerAsync(int id);
         Task<SiteManager> GetSiteManagerByIdAsync(int id);
-        IEnumerable<SiteManager> GetAllSiteManagers();
+        Task<IEnumerable<SiteManager>> GetAllSiteManagersAsync();
     }
 }

@@ -42,7 +42,7 @@ namespace HR_Project.API
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
             builder.Services.AddTransient<ISiteManagerRepository, SiteManagerRepository>();
-
+            builder.Services.AddTransient<PasswordHasher<AppUser>>();
 
 
             //builder.Services.AddTransient<ISiteManagerService, SiteManagerService>();
