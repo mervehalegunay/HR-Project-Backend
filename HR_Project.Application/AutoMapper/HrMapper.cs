@@ -12,9 +12,7 @@ namespace HR_Project.Application.AutoMapper
     {
         public HrMapper() 
         {
-            CreateMap<SiteManager , SiteManagerDetails>().ForMember(d=>d.FullName, o=>o.MapFrom(src=>src.FirstName + " " + src.LastName));
-            
-            CreateMap<SiteManager , SiteManagerUpdate>();
+
             
         }
     }

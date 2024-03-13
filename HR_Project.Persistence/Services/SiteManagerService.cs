@@ -7,6 +7,8 @@ using HR_Project.Application;
 using HR_Project.Application.DTOs.SiteManagerDTO;
 using HR_Project.Application.Services;
 using HR_Project.Domain.Entitites;
+using HR_Project.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HR_Project.Persistence.Services
 {
@@ -24,9 +26,23 @@ namespace HR_Project.Persistence.Services
         {
             if (id > 0)
             {
-                var siteManager = repo.GetByIdAsync(id);
-                var siteManagerDetails = mapper.Map<SiteManagerDetails>(siteManager);
-                return siteManagerDetails;   
+                SiteManagerDetails resultSum = await repo.GetFilteredFirstOrDefault(select: x => new SiteManagerDetails
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    SecondLastName = x.SecondLastName,
+                    SecondName = x.SecondName,
+                    Email = x.AppUser.Email,
+                    PhoneNumber = x.PhoneNumber,
+                    BirthDate = x.BirthDate,
+                    BirthPlace = x.BirthPlace,
+                    HireDate = x.HireDate,
+                    ImagePath = x.ImagePath,
+                    LeavingDate = x.LeavingDate,
+                    TCNO = x.TCNO,
+                }, where: x => x.Id == id && x.Status != Domain.Enums.Status.Passive, include: q => q.Include(x => x.AppUser));
+
+                return resultSum;
             }
             else
             {
@@ -47,15 +63,22 @@ namespace HR_Project.Persistence.Services
         {
             if (id>0)
             {
-                var siteManager = repo.GetByIdAsync(id);
-                var SiteManagerUpdate = mapper.Map<SiteManagerUpdate>(siteManager);
-                return SiteManagerUpdate; 
+                SiteManagerUpdate resultSum = await
+                    repo.GetFilteredFirstOrDefault(select: x => new SiteManagerUpdate
+                    {
+                        AddressDetail = x.AddressDetail,
+                        City = x.City,
+                        District = x.District,
+                        ImagePath = x.ImagePath,
+                        PhoneNumber = x.PhoneNumber
 
+                    }, where: x => x.Id == id && x.Status != Domain.Enums.Status.Passive);
+
+                return resultSum;
             }
             else
             {
-                
-            return null;
+                return null;
             }
         }
     }
