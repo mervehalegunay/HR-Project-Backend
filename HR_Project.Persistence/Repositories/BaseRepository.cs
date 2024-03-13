@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -62,6 +62,34 @@ namespace HR_Project.Persistence.Repositories
             {
                 return null;
             }
+        }
+
+        public async Task<TResult> GetFilteredFirstOrDefault<TResult>(Expression<Func<T, TResult>> select = null, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+
+            IQueryable<T> query = Table;  // SELECT * FROM Post gibi...
+
+            if (include != null)  // JOIN İŞLEMİ
+            {
+                query = include(query);
+            }
+
+            if (where != null) // SELECT * FOM Post WHERE Status = 1 gibi...
+            {
+                query = query.Where(where);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).Select(select).FirstOrDefaultAsync();
+
+            }
+
+            var result = await query.Select(select).FirstOrDefaultAsync();
+
+            return result;
+
+
         }
 
         public async Task<bool> RemoveAsync(T model)

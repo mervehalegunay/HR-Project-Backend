@@ -14,10 +14,10 @@ using HR_Project.Persistence.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
-// builder.Services.AddPersistenceServices(); 
 builder.Services.AddAutoMapper(typeof(HrMapper));
+builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Berkay")));
+// builder.Services.AddPersistenceServices(); 
+
 
 builder.Services.AddControllersWithViews();
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -22,10 +22,18 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetSiteManager()
+        public async Task<IActionResult> GetSiteManager(int id)
         {
-            SiteManagerDetails manager = await SmService.GetSiteManagerDetails(3);
-            return Ok(manager);
+            SiteManagerDetails manager = await SmService.GetSiteManagerDetails(id);
+            if (manager != null)
+            {
+                return Ok(manager);
+            }
+            else
+            {
+                return NotFound("Kişi Bulunamadı");
+            }
+
         }
 
         [HttpPatch]
