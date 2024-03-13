@@ -15,17 +15,12 @@ namespace HR_Project.Application
     {
         DbSet<T> Table { get; }
         Task<bool> AddAsync(T model);
-        Task<bool> AddRangeAsync(List<T> datas);
-        bool Remove(T model);
-        Task<bool> RemoveAsync(int id);
-        bool RemoveRange(List<T> datas);
-        bool Update(T model);
-        Task<int> SaveAsync();
+        Task<bool> RemoveAsync(T model);
+        Task<bool> UpdateAsync(T model);
 
-        Task<IEnumerable<T>> GetAll(bool tracking = true);
-        IEnumerable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
-        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
-        Task<T> GetByIdAsync(int id, bool tracking = true);
+        Task<IEnumerable<T>> GetAll();
+
+        Task<T> GetByIdAsync(int id);
 
 
     }

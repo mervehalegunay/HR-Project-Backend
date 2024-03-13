@@ -1,4 +1,5 @@
-﻿using HR_Project.Domain.Entitites;
+﻿using HR_Project.Application.DTOs.SiteManagerDTO;
+using HR_Project.Domain.Entitites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,7 @@ namespace HR_Project.Application.Services
 {
     public interface ISiteManagerService
     {
-        Task<bool> AddSiteManagerAsync(SiteManager siteManager);
-        bool UpdateSiteManager(SiteManager siteManager);
-        Task<bool> DeleteSiteManagerAsync(int id);
-        Task<SiteManager> GetSiteManagerByIdAsync(int id);
-        Task<IEnumerable<SiteManager>> GetAllSiteManagersAsync();
+        Task<SiteManagerDetails> GetSiteManagerDetails(int id);
+        Task<SiteManagerUpdate> UpdateSiteManager(int id);
     }
 }
