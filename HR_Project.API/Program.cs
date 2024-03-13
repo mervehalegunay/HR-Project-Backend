@@ -7,29 +7,37 @@ using HR_Project.Application;
 using HR_Project.Domain.Entitites.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
+using HR_Project.Application.AutoMapper;
+using HR_Project.Application.Services;
+using HR_Project.Persistence.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
 
+builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Tarik")));
 // builder.Services.AddPersistenceServices(); 
+builder.Services.AddAutoMapper(typeof(HrMapper));
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<HRProjectAPIDBContext>();
+// builder.Services.AddIdentity<AppUser, IdentityRole>()
+//     .AddEntityFrameworkStores<HRProjectAPIDBContext>();
 
-builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/api/account/login");
+// builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/api/account/login");
 
-builder.Services.Configure<IdentityOptions>(opt =>
-{
-    opt.User.RequireUniqueEmail = true;
-});
+// builder.Services.Configure<IdentityOptions>(opt =>
+// {
+//     opt.User.RequireUniqueEmail = true;
+// });
 
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddTransient<ISiteManagerRepository, SiteManagerRepository>();
-builder.Services.AddTransient<PasswordHasher<AppUser>>();
+builder.Services.AddTransient<ISiteManagerService, SiteManagerService>();
+// builder.Services.AddTransient<PasswordHasher<AppUser>>();
+
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
