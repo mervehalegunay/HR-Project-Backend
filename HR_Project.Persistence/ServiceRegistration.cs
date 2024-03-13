@@ -1,8 +1,8 @@
 ﻿using HR_Project.Application;
 using HR_Project.Application.Services;
 using HR_Project.Persistence.Context;
-using HR_Project.Persistence.Managers;
 using HR_Project.Persistence.Repositories;
+using HR_Project.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,14 +24,14 @@ namespace HR_Project.Persistence
             .Build();
 
             // Connection string'i al
-            var connectionString = configuration.GetConnectionString("Hale"); // veya istediğiniz anahtar
+            var connectionString = configuration.GetConnectionString("Tarik"); // veya istediğiniz anahtar
 
             // SQL Server bağlantısını ekle
             services.AddDbContext<HRProjectAPIDBContext>(options =>
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<ISiteManagerRepository, SiteManagerRepository>();
-            services.AddScoped<ISiteManagerService, SiteManagerManager>();
+            services.AddScoped<ISiteManagerService, SiteManagerService>();
         }
         
            
