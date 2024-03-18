@@ -12,6 +12,8 @@ namespace HR_Project.Application.AutoMapper
     {
         public HrMapper() 
         {
+                CreateMap<SiteManagerDetails , SiteManager>();
+                CreateMap<SiteManagerUpdate , SiteManager>().ReverseMap();
 
             
         }
