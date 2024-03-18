@@ -13,16 +13,16 @@ namespace HR_Project.Domain.Entitites
     public class SiteManager : Person , IBaseEntity
     {
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public Status Status { get; set; }
+        public Status Status { get; set; } = Status.Active;
 
         [NotMapped]
         public IFormFile? UploadPath { get; set; }
        
 
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public string? AppUserId { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

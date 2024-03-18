@@ -21,8 +21,8 @@ builder.Services.AddDbContext<HRProjectAPIDBContext>(options => options.UseSqlSe
 
 builder.Services.AddControllersWithViews();
 
-// builder.Services.AddIdentity<AppUser, IdentityRole>()
-//     .AddEntityFrameworkStores<HRProjectAPIDBContext>();
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<HRProjectAPIDBContext>();
 
 // builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/api/account/login");
 

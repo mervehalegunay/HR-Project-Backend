@@ -64,6 +64,27 @@ namespace HR_Project.Persistence.Context
 				UserId = adminId,
 				RoleId = roleId,
 			});
+
+			builder.Entity<SiteManager>().HasData(
+				new SiteManager(){
+					Id = 1,
+					FirstName = "Tarik",
+					SecondName = "Bugra",
+					LastName = "Kaya",
+					SecondLastName = "Kaya",
+					BirthDate = new DateTime(2000, 7, 17),
+					BirthPlace = "Bitlis",
+					TCNO = "13123213213",
+					HireDate = DateTime.Now,
+					Job = "SoftwareDeveloper",
+					Department = "IT",
+					Email = "tarikbugra.kaya@bilgeadam.com",
+					Address = "Konya",
+					PhoneNumber = "0521 532 45 78",
+					ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.trthaber.com%2Fhaber%2Fspor%2Fmauro-icardi-buyuk-maclari-bos-gecmedi-822620.html&psig=AOvVaw1eJ6gH3t4-gdwq3AQXUKjl&ust=1710826238616000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjD7MKK_YQDFQAAAAAdAAAAABAE"
+
+				}
+			);
             base.OnModelCreating(builder);
         }
 
