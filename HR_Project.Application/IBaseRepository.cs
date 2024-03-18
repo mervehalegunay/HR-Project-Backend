@@ -23,12 +23,10 @@ namespace HR_Project.Application
         Task<T> GetByIdAsync(int id);
 
         Task<TResult> GetFilteredFirstOrDefault<TResult>(
-    Expression<Func<T, TResult>> select = null,
-    Expression<Func<T, bool>> where = null,
-    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-    Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
-    );
-
-
+        Expression<Func<T, TResult>> select = null,
+        Expression<Func<T, bool>> where = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null
+        );
     }
 }
