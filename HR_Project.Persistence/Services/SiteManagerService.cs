@@ -66,9 +66,6 @@ namespace HR_Project.Persistence.Services
                 SiteManagerUpdate resultSum = await
                     repo.GetFilteredFirstOrDefault(select: x => new SiteManagerUpdate
                     {
-                        AddressDetail = x.AddressDetail,
-                        City = x.City,
-                        District = x.District,
                         ImagePath = x.ImagePath,
                         PhoneNumber = x.PhoneNumber
 

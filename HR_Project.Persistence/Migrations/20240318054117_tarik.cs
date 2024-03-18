@@ -168,24 +168,22 @@ namespace HR_Project.Persistence.Migrations
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecondName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecondLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TCNO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthPlace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TCNO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LeavingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Job = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Salary = table.Column<int>(type: "int", nullable: true),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,24 +192,27 @@ namespace HR_Project.Persistence.Migrations
                         name: "FK_SiteManagers_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ef21406f-d985-4171-876b-60e988e25f18", "476cb8d2-688d-4164-8338-8abdea9e5c56", "Standard User", "STANDARD USER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f6040633-db1b-4a48-be54-9f214e77ac9d", "0c62afbd-a6f7-48e7-a34e-fad272b3a3d5", "admin", "ADMIN" });
+                values: new object[,]
+                {
+                    { "02f37120-8e26-4584-9b56-cfc7bb3a0ed9", "4afe4fe1-a6e9-4a13-bee3-782e891a4bb2", "Standard User", "STANDARD USER" },
+                    { "f6040633-db1b-4a48-be54-9f214e77ac9d", "003ce5eb-cdb6-49b8-8cf5-aa91324b8f4a", "admin", "ADMIN" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName", "isDeleted" },
-                values: new object[] { "df5a9b38-18e8-48b7-97bf-ad4a9b4afe0e", 0, "a688828d-f205-4812-8c20-573f2dafb85e", "admin@gmail.com", false, "Admin", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEHLjeW1O1y4D+cSn3LoTdpCwfFw2ipovfxA4jXL8dhX3nixNeD0qWRT7hzctJSNoUQ==", null, false, "", 1, false, "admin", false });
+                values: new object[] { "df5a9b38-18e8-48b7-97bf-ad4a9b4afe0e", 0, "2d5d10f8-3262-4d58-9b3e-cb06ed3a9256", "admin@gmail.com", false, "Admin", "Admin", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEMAfsmz6LVfIiZzel0jW9iVdIa6GMIdgMu8DlHiAx7fShGJEPC2MCe9cgqjkQCEnuQ==", null, false, "", 1, false, "admin", false });
+
+            migrationBuilder.InsertData(
+                table: "SiteManagers",
+                columns: new[] { "Id", "Address", "AppUserId", "BirthDate", "BirthPlace", "CreatedDate", "DeletedDate", "Department", "Email", "FirstName", "HireDate", "ImagePath", "Job", "LastName", "LeavingDate", "PhoneNumber", "SecondLastName", "SecondName", "Status", "TCNO", "UpdatedDate" },
+                values: new object[] { 1, "Konya", null, new DateTime(2000, 7, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bitlis", new DateTime(2024, 3, 18, 8, 41, 16, 817, DateTimeKind.Local).AddTicks(7964), null, "IT", "tarikbugra.kaya@bilgeadam.com", "Tarik", new DateTime(2024, 3, 18, 8, 41, 16, 817, DateTimeKind.Local).AddTicks(8001), "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.trthaber.com%2Fhaber%2Fspor%2Fmauro-icardi-buyuk-maclari-bos-gecmedi-822620.html&psig=AOvVaw1eJ6gH3t4-gdwq3AQXUKjl&ust=1710826238616000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjD7MKK_YQDFQAAAAAdAAAAABAE", "SoftwareDeveloper", "Kaya", null, "0521 532 45 78", "Kaya", "Bugra", 1, "13123213213", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

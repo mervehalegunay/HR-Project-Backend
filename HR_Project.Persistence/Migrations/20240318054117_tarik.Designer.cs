@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR_Project.Persistence.Migrations
 {
     [DbContext(typeof(HRProjectAPIDBContext))]
-    [Migration("20240311031212_tarik")]
+    [Migration("20240318054117_tarik")]
     partial class tarik
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,7 +107,7 @@ namespace HR_Project.Persistence.Migrations
                         {
                             Id = "df5a9b38-18e8-48b7-97bf-ad4a9b4afe0e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a688828d-f205-4812-8c20-573f2dafb85e",
+                            ConcurrencyStamp = "2d5d10f8-3262-4d58-9b3e-cb06ed3a9256",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -115,7 +115,7 @@ namespace HR_Project.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHLjeW1O1y4D+cSn3LoTdpCwfFw2ipovfxA4jXL8dhX3nixNeD0qWRT7hzctJSNoUQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMAfsmz6LVfIiZzel0jW9iVdIa6GMIdgMu8DlHiAx7fShGJEPC2MCe9cgqjkQCEnuQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = 1,
@@ -136,11 +136,7 @@ namespace HR_Project.Persistence.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressDetail")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AppUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("BirthDate")
@@ -149,23 +145,19 @@ namespace HR_Project.Persistence.Migrations
                     b.Property<string>("BirthPlace")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("District")
+                    b.Property<string>("Department")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("HireDate")
@@ -174,8 +166,10 @@ namespace HR_Project.Persistence.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Job")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LeavingDate")
@@ -183,9 +177,6 @@ namespace HR_Project.Persistence.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Salary")
-                        .HasColumnType("int");
 
                     b.Property<string>("SecondLastName")
                         .HasColumnType("nvarchar(max)");
@@ -207,6 +198,28 @@ namespace HR_Project.Persistence.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("SiteManagers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Konya",
+                            BirthDate = new DateTime(2000, 7, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BirthPlace = "Bitlis",
+                            CreatedDate = new DateTime(2024, 3, 18, 8, 41, 16, 817, DateTimeKind.Local).AddTicks(7964),
+                            Department = "IT",
+                            Email = "tarikbugra.kaya@bilgeadam.com",
+                            FirstName = "Tarik",
+                            HireDate = new DateTime(2024, 3, 18, 8, 41, 16, 817, DateTimeKind.Local).AddTicks(8001),
+                            ImagePath = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.trthaber.com%2Fhaber%2Fspor%2Fmauro-icardi-buyuk-maclari-bos-gecmedi-822620.html&psig=AOvVaw1eJ6gH3t4-gdwq3AQXUKjl&ust=1710826238616000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjD7MKK_YQDFQAAAAAdAAAAABAE",
+                            Job = "SoftwareDeveloper",
+                            LastName = "Kaya",
+                            PhoneNumber = "0521 532 45 78",
+                            SecondLastName = "Kaya",
+                            SecondName = "Bugra",
+                            Status = 1,
+                            TCNO = "13123213213"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -239,14 +252,14 @@ namespace HR_Project.Persistence.Migrations
                         new
                         {
                             Id = "f6040633-db1b-4a48-be54-9f214e77ac9d",
-                            ConcurrencyStamp = "0c62afbd-a6f7-48e7-a34e-fad272b3a3d5",
+                            ConcurrencyStamp = "003ce5eb-cdb6-49b8-8cf5-aa91324b8f4a",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ef21406f-d985-4171-876b-60e988e25f18",
-                            ConcurrencyStamp = "476cb8d2-688d-4164-8338-8abdea9e5c56",
+                            Id = "02f37120-8e26-4584-9b56-cfc7bb3a0ed9",
+                            ConcurrencyStamp = "4afe4fe1-a6e9-4a13-bee3-782e891a4bb2",
                             Name = "Standard User",
                             NormalizedName = "STANDARD USER"
                         });
@@ -369,9 +382,7 @@ namespace HR_Project.Persistence.Migrations
                 {
                     b.HasOne("HR_Project.Domain.Entitites.Common.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
                 });
