@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HR_Project.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class SiteManagerController : ControllerBase
     {
         private readonly ISiteManagerService SmService;
@@ -22,6 +22,7 @@ namespace HR_Project.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetSiteManager")]
         public async Task<IActionResult> GetSiteManager(int id)
         {
             SiteManagerDetails manager = await SmService.GetSiteManagerDetails(id);
